@@ -48,7 +48,7 @@ static int proty_init(apr_pool_t *p, apr_pool_t *ptemp,
   ap_add_version_component(p, version);
 
   char buff[255];
-  sprintf(buff, "proty/%.200s", proty_version());
+  sprintf(buff, "proty/%.200s", proty_version_string());
   ap_add_version_component(p, buff);
 
   runtime_init();
