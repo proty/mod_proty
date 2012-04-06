@@ -1,6 +1,7 @@
 #include <httpd.h>
 #include <http_config.h>
 #include <http_log.h>
+#include <proty/env.h>
 #include <proty/runtime/runtime.h>
 #include <proty/compiler/compiler.h>
 #include <proty/vm/module.h>
@@ -34,7 +35,6 @@ static int proty_handler(request_rec* r) {
   State_delete(state);
 
   Module_delete(module);
-
   ap_set_content_type(r, "text/html");
   ap_rputs(res->data.ptr , r);
 
@@ -46,6 +46,10 @@ static int proty_init(apr_pool_t *p, apr_pool_t *ptemp,
 
   const char* version = "mod_proty/" VERSION;
   ap_add_version_component(p, version);
+
+  char buff[255];
+  sprintf(buff, "proty/%.200s", proty_version());
+  ap_add_version_component(p, buff);
 
   runtime_init();
 
